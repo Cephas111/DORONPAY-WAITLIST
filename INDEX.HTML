@@ -74,14 +74,9 @@
 
         .logo img {
             height: 40px;
-            /* adjust to your liking */
             width: auto;
-            /* keeps proportions */
             display: block;
-            /* removes inline spacing */
         }
-
-
 
         .nav-menu {
             display: flex;
@@ -181,10 +176,12 @@
             background: rgba(30, 41, 59, 0.8);
             border: 1px solid rgba(249, 115, 22, 0.3);
             border-radius: 30px;
-            padding: 4px;
+            padding: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 400px;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .email-input {
@@ -360,20 +357,6 @@
             animation: hexFloat 7s ease-in-out infinite;
         }
 
-        /* .hex-shape2 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            top: 75%;
-            left: 80%;
-            background: linear-gradient(135deg, #f97316 60%, #0ea5e9 100%);
-            clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-            opacity: 0.5;
-            box-shadow: 0 0 20px 6px #f97316;
-            animation: hexFloat 9s ease-in-out infinite;
-            animation-delay: 3s;
-        } */
-
         @keyframes hexFloat {
             0%,
             100% {
@@ -386,7 +369,6 @@
         }
 
         @keyframes float {
-
             0%,
             100% {
                 transform: translateY(0px) rotate(0deg);
@@ -464,10 +446,6 @@
 <body>
     <div class="bg-grid"></div>
     <div class="bg-decoration">
-        <!-- <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div> -->
-        <!-- <div class="hex-shape"></div> -->
         <div class="hex-shape2"></div>
     </div>
 
@@ -475,22 +453,8 @@
         <div class="nav-left">
             <div class="logo">
                 <img src="./assests/logo.png" alt="Doronpay Logo" />
-
             </div>
-
-            <!-- <nav class="nav-menu">
-                <a href="#about">About</a>
-                <a href="#technologies">Technologies</a>
-                <a href="#products">Products</a>
-                <a href="#discover">Discover</a>
-            </nav> -->
         </div>
-        <!-- <div class="nav-right">
-            <a href="#team">Team</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#premium">Buy Premium</a>
-            <a href="#" class="get-started-btn">Get Started</a>
-        </div> -->
     </header>
 
     <main class="main-content">
@@ -498,33 +462,23 @@
 
         <h1 class="main-title">
             A <a style="color: #f97316;">Crypto–Fiat</a> & <a style="color: #f97316;">Digital Payment</a> Platform Made Simple.<br>
-
         </h1>
 
         <p class="subtitle">
             Join the waitlist, win rewards and be the first to experience DoronPay.<br>
             Pay fast, pay smart<br>
-
         </p>
 
         <form class="email-form" onsubmit="handleSubmit(event)">
             <div class="email-input-container">
-                <input type="email" class="email-input" placeholder="Enter your email" required>
-                <button type="submit" class="join-btn">Join Waitlist</button>
+                <input type="text" class="email-input" placeholder="First Name" required>
+                <input type="text" class="email-input" placeholder="Last Name" required>
+                <div style="display: flex; width: 100%;">
+                    <input type="email" class="email-input" placeholder="Enter your email" required style="flex: 1;">
+                    <button type="submit" class="join-btn">Join Waitlist</button>
+                </div>
             </div>
         </form>
-
-        <!-- <div class="rating">
-            <div class="stars">
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-            </div>
-            <span>4.9 rating</span>
-            <span style="color: #9ca3af;">Based on 300k Users</span>
-        </div> -->
 
         <div class="cube-container">
             <div class="cube">
@@ -541,15 +495,14 @@
     <script>
         function handleSubmit(event) {
             event.preventDefault();
-            const email = event.target.querySelector('.email-input').value;
+            const email = event.target.querySelector('input[type="email"]').value;
 
             if (email) {
                 alert(`Thank you! We've added ${email} to the waitlist.`);
-                event.target.querySelector('.email-input').value = '';
+                event.target.querySelector('input[type="email"]').value = '';
             }
         }
 
-        // Add some interactive hover effects
         document.addEventListener('DOMContentLoaded', function () {
             const cube = document.querySelector('.cube');
             let isHovered = false;
@@ -564,7 +517,6 @@
                 this.style.animationPlayState = 'running';
             });
 
-            // Add subtle parallax effect to floating shapes
             document.addEventListener('mousemove', function (e) {
                 const shapes = document.querySelectorAll('.floating-shape');
                 const mouseX = e.clientX / window.innerWidth;
