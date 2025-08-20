@@ -98,7 +98,7 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .nav-right a {
@@ -120,6 +120,30 @@
         .get-started-btn:hover {
             background: #ea580c;
             transform: translateY(-1px);
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, #0ea5e9 0%, #f97316 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .nav-btn.login {
+            background: #222;
+            color: #f97316;
+            border: 1px solid #f97316;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(90deg, #f97316 0%, #0ea5e9 100%);
+            transform: translateY(-2px) scale(1.04);
         }
 
         /* Main Content */
@@ -440,6 +464,45 @@
                 display: none;
             }
         }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #222;
+            color: #fff;
+            border-radius: 16px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid #0ea5e9;
+            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+            text-decoration: none;
+            transition: background 0.2s, border 0.2s, transform 0.2s;
+        }
+
+        .store-btn.appstore {
+            border-color: #f97316;
+        }
+
+        .store-btn:hover {
+            background: #f97316;
+            border-color: #f97316;
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        .store-icon {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -454,6 +517,10 @@
             <div class="logo">
                 <img src="./assests/logo.png" alt="Doronpay Logo" />
             </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn signup">Sign Up</button>
+            <button class="nav-btn login">Login</button>
         </div>
     </header>
 
@@ -479,6 +546,17 @@
                 </div>
             </div>
         </form>
+
+        <div class="download-buttons">
+            <a href="#" class="store-btn playstore">
+                <img class="store-icon" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" style="height:28px;width:auto;">
+                Play Store
+            </a>
+            <a href="#" class="store-btn appstore">
+                <img class="store-icon" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" style="height:28px;width:auto;">
+                App Store
+            </a>
+        </div>
 
         <div class="cube-container">
             <div class="cube">
