@@ -149,7 +149,7 @@
         /* Main Content */
         .main-content {
             text-align: center;
-            padding: 60px 20px;
+            /* padding: 60px 20px; */
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
@@ -382,6 +382,7 @@
         }
 
         @keyframes hexFloat {
+
             0%,
             100% {
                 transform: translateY(0px) rotate(0deg);
@@ -393,6 +394,7 @@
         }
 
         @keyframes float {
+
             0%,
             100% {
                 transform: translateY(0px) rotate(0deg);
@@ -400,6 +402,718 @@
 
             50% {
                 transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+
+
+
+        /* 
+// default-footer.component.scss */
+        .footer-container {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #090909 0%, #0a0a0a 50%, #0c0c0c 100%);
+            border-top: 1px solid rgba(255, 165, 0, 0.1);
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #f7931a, transparent);
+            }
+        }
+
+        .footer-main>* {
+            min-width: 0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 0 0;
+            color: #d4d4d4;
+
+            @media (max-width: 768px) {
+                padding: 2rem 1rem 0;
+            }
+
+            @media (max-width: 480px) {
+                padding: 1.5rem 0.75rem 0;
+            }
+        }
+
+        /* // Main Footer Sections */
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr repeat(5, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+
+            @media (max-width: 1200px) {
+                grid-template-columns: 2fr repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            @media (max-width: 968px) {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            @media (max-width: 480px) {
+                gap: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        .footer-section {
+            h5 {
+                color: #fff;
+                font-size: 1rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                position: relative;
+
+                @media (max-width: 480px) {
+                    font-size: 0.95rem;
+                    margin-bottom: 0.75rem;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -4px;
+                    left: 0;
+                    width: 30px;
+                    height: 2px;
+                    background: linear-gradient(90deg, #f7931a, #ff8c00);
+                }
+            }
+        }
+
+        /* // Brand Section */
+        .footer-brand {
+            @media (max-width: 768px) {
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+
+            .brand-logo {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 1rem;
+
+                @media (max-width: 768px) {
+                    justify-content: center;
+                }
+
+                @media (max-width: 480px) {
+                    gap: 0.5rem;
+                    margin-bottom: 0.75rem;
+                }
+
+                .footer-logo {
+                    width: 40px;
+                    height: 40px;
+
+                    @media (max-width: 480px) {
+                        width: 35px;
+                        height: 35px;
+                    }
+                }
+
+                h4 {
+                    color: #f7931a;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    margin: 0;
+
+                    @media (max-width: 480px) {
+                        font-size: 1.25rem;
+                    }
+                }
+            }
+
+            .brand-description {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.8);
+                margin-bottom: 1.5rem;
+
+                @media (max-width: 480px) {
+                    font-size: 0.85rem;
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+
+        .security-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            @media (max-width: 768px) {
+                align-items: center;
+            }
+
+            @media (max-width: 480px) {
+                gap: 0.4rem;
+            }
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+
+            @media (max-width: 480px) {
+                font-size: 0.8rem;
+                gap: 0.4rem;
+            }
+
+            i {
+                color: #4caf50;
+                font-size: 1rem;
+
+                @media (max-width: 480px) {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        /* // Footer Links */
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            @media (max-width: 768px) {
+                text-align: center;
+            }
+
+            li {
+                margin-bottom: 0.5rem;
+
+                @media (max-width: 480px) {
+                    margin-bottom: 0.4rem;
+                }
+
+                a {
+                    color: rgba(255, 255, 255, 0.7);
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    transition: all 0.2s ease;
+                    display: inline-block;
+
+                    @media (max-width: 480px) {
+                        font-size: 0.85rem;
+                    }
+
+                    &:hover {
+                        color: #f7931a;
+                        transform: translateX(4px);
+
+                        @media (max-width: 768px) {
+                            transform: translateY(-2px);
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Newsletter Section */
+        .footer-newsletter {
+            background: rgba(247, 147, 26, 0.05);
+            border: 1px solid rgba(247, 147, 26, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+
+            @media (max-width: 768px) {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+                border-radius: 12px;
+            }
+
+            @media (max-width: 480px) {
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .newsletter-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 2rem;
+
+                @media (max-width: 768px) {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 1.5rem;
+                }
+
+                @media (max-width: 480px) {
+                    gap: 1.25rem;
+                }
+            }
+
+            .newsletter-text {
+                @media (max-width: 768px) {
+                    width: 100%;
+                }
+
+                h4 {
+                    color: #fff;
+                    font-size: 1.25rem;
+                    margin-bottom: 0.5rem;
+
+                    @media (max-width: 480px) {
+                        font-size: 1.1rem;
+                        margin-bottom: 0.4rem;
+                    }
+                }
+
+                p {
+                    color: rgba(255, 255, 255, 0.8);
+                    margin: 0;
+
+                    @media (max-width: 480px) {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            min-width: 300px;
+
+            @media (max-width: 768px) {
+                width: 100%;
+                min-width: unset;
+                flex-direction: column;
+                border-radius: 8px;
+            }
+
+            .newsletter-input {
+                flex: 1;
+                padding: 0.875rem 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.05);
+                color: #fff;
+                font-size: 0.9rem;
+                outline: none;
+
+                @media (max-width: 768px) {
+                    border-radius: 8px 8px 0 0;
+                }
+
+                @media (max-width: 480px) {
+                    padding: 0.75rem 0.875rem;
+                    font-size: 0.85rem;
+                }
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.5);
+                }
+
+                &:focus {
+                    border-color: #f7931a;
+                    background: rgba(255, 255, 255, 0.08);
+                }
+            }
+
+            .newsletter-btn {
+                padding: 0.875rem 1.5rem;
+                background: linear-gradient(135deg, #f7931a, #ff8c00);
+                border: none;
+                color: white;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                @media (max-width: 768px) {
+                    border-radius: 0 0 8px 8px;
+                }
+
+                @media (max-width: 480px) {
+                    padding: 0.75rem 1.25rem;
+                    font-size: 0.9rem;
+                }
+
+                &:hover:not(:disabled) {
+                    background: linear-gradient(135deg, #ff8c00, #f7931a);
+                    transform: translateY(-1px);
+                }
+
+                &:disabled {
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                }
+
+                .spinning {
+                    animation: spin 1s linear infinite;
+                }
+            }
+        }
+
+        /* // Social Media Section */
+        .footer-social {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 2rem;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            @media (max-width: 480px) {
+                margin-bottom: 1.5rem;
+                gap: 1.25rem;
+            }
+        }
+
+        .social-section {
+            h5 {
+                color: #fff;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+
+                @media (max-width: 480px) {
+                    font-size: 0.95rem;
+                    margin-bottom: 0.75rem;
+                }
+            }
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+
+            @media (max-width: 768px) {
+                justify-content: center;
+            }
+
+            @media (max-width: 480px) {
+                gap: 0.6rem;
+            }
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            @media (max-width: 480px) {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+            }
+
+            i {
+                font-size: 1.2rem;
+
+                @media (max-width: 480px) {
+                    font-size: 1.1rem;
+                }
+            }
+
+            &.twitter {
+                background: rgba(29, 161, 242, 0.1);
+            }
+
+            &.facebook {
+                background: rgba(24, 119, 242, 0.1);
+            }
+
+            &.instagram {
+                background: rgba(225, 48, 108, 0.1);
+            }
+
+            &.linkedin {
+                background: rgba(0, 119, 181, 0.1);
+            }
+
+            &.telegram {
+                background: rgba(0, 136, 204, 0.1);
+            }
+
+            &.discord {
+                background: rgba(114, 137, 218, 0.1);
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+                border-color: #f7931a;
+            }
+        }
+
+        /* // App Downloads */
+        .app-downloads {
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+
+            h5 {
+                color: #fff;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+
+                @media (max-width: 480px) {
+                    font-size: 0.95rem;
+                    margin-bottom: 0.75rem;
+                }
+            }
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 0.75rem;
+
+            @media (max-width: 768px) {
+                justify-content: center;
+            }
+
+            @media (max-width: 580px) {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+            }
+
+            @media (max-width: 480px) {
+                gap: 0.5rem;
+            }
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s ease;
+
+            @media (max-width: 580px) {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            @media (max-width: 480px) {
+                padding: 0.65rem 0.875rem;
+                gap: 0.6rem;
+                border-radius: 10px;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: #f7931a;
+                transform: translateY(-1px);
+            }
+
+            i {
+                font-size: 1.5rem;
+                color: #f7931a;
+
+                @media (max-width: 480px) {
+                    font-size: 1.3rem;
+                }
+            }
+
+            .download-text {
+                display: flex;
+                flex-direction: column;
+
+                .small {
+                    font-size: 0.75rem;
+                    color: rgba(255, 255, 255, 0.7);
+
+                    @media (max-width: 480px) {
+                        font-size: 0.7rem;
+                    }
+                }
+
+                .large {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+
+                    @media (max-width: 480px) {
+                        font-size: 0.85rem;
+                    }
+                }
+            }
+        }
+
+        /* // Footer Bottom */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+
+            @media (max-width: 480px) {
+                padding: 1.25rem 0;
+            }
+        }
+
+        .footer-bottom-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+
+            @media (max-width: 968px) {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            @media (max-width: 480px) {
+                font-size: 0.8rem;
+                gap: 0.75rem;
+            }
+        }
+
+        .footer-left,
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            @media (max-width: 580px) {
+                flex-direction: column;
+                gap: 0.25rem;
+                text-align: center;
+            }
+
+            .separator {
+                color: rgba(255, 255, 255, 0.3);
+
+                @media (max-width: 580px) {
+                    display: none;
+                }
+            }
+        }
+
+        .currency-rates {
+            display: flex;
+            gap: 1rem;
+
+            @media (max-width: 580px) {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            @media (max-width: 480px) {
+                gap: 0.2rem;
+            }
+
+            .rate-item {
+                color: rgba(255, 255, 255, 0.8);
+                font-weight: 500;
+
+                @media (max-width: 480px) {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            @media (max-width: 480px) {
+                gap: 0.4rem;
+            }
+
+            .status-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #666;
+
+                @media (max-width: 480px) {
+                    width: 7px;
+                    height: 7px;
+                }
+
+                &.online {
+                    background: #4caf50;
+                    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+                }
+            }
+
+            .status-text {
+                font-size: 0.8rem;
+                color: rgba(255, 255, 255, 0.7);
+
+                @media (max-width: 480px) {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+
+        /* // Animations */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* // Additional mobile-specific improvements */
+        @media (max-width: 375px) {
+            .footer-content {
+                padding: 1.25rem 0.5rem 0;
+            }
+
+            .footer-newsletter {
+                padding: 1rem;
+            }
+
+            .social-links {
+                gap: 0.5rem;
+            }
+
+            .social-link {
+                width: 36px;
+                height: 36px;
+
+                i {
+                    font-size: 1rem;
+                }
             }
         }
 
@@ -504,6 +1218,8 @@
             display: inline-block;
         }
     </style>
+    <!-- In your footer HTML, make sure you include the icon library for the social icons. Add this in your <head>: -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
@@ -532,7 +1248,8 @@
         <div class="waitlist-badge">Join Waitlist</div>
 
         <h1 class="main-title">
-            A <a style="color: #f97316;">Crypto–Fiat</a> & <a style="color: #f97316;">Digital Payment</a> Platform Made Simple.<br>
+            A <a style="color: #f97316;">Crypto–Fiat</a> & <a style="color: #f97316;">Digital Payment</a> Platform Made
+            Simple.<br>
         </h1>
 
         <p class="subtitle">
@@ -553,11 +1270,15 @@
 
         <div class="download-buttons">
             <a href="#" class="store-btn playstore">
-                <img class="store-icon" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" style="height:28px;width:auto;">
+                <img class="store-icon"
+                    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                    alt="Play Store" style="height:28px;width:auto;">
                 Play Store
             </a>
             <a href="#" class="store-btn appstore">
-                <img class="store-icon" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" style="height:28px;width:auto;">
+                <img class="store-icon"
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                    alt="App Store" style="height:28px;width:auto;">
                 App Store
             </a>
         </div>
@@ -572,7 +1293,193 @@
                 <div class="cube-face bottom"></div>
             </div>
         </div>
+
+
+
+
+
     </main>
+
+    <!-- default-footer.component.html -->
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Main Footer Content -->
+            <div class="footer-main">
+                <div class="footer-section footer-brand">
+                    <div class="brand-logo">
+                        <img src="./assests/logo.png" alt="DoronPay" class="footer-logo">
+                        <h4>DoronPay</h4>
+                    </div>
+                    <p class="brand-description">
+                        Your trusted platform for cryptocurrency trading, money transfers,
+                        and digital financial services in Ghana and beyond.
+                    </p>
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <i class="ri-shield-check-fill"></i>
+                            <span>Bank-Level Security</span>
+                        </div>
+                        <div class="security-badge">
+                            <i class="ri-lock-fill"></i>
+                            <span>256-bit Encryption</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h5>Services</h5>
+                    <ul class="footer-links">
+                        <li><a href="/app/buy-bitcoin">Buy Bitcoin</a></li>
+                        <li><a href="/app/sell-bitcoin">Sell Bitcoin</a></li>
+                        <li><a href="/app/buy-usdt">Buy USDT</a></li>
+                        <li><a href="/app/usdt-transfer">USDT Transfer</a></li>
+                        <li><a href="/app/send-money">Send Money</a></li>
+                        <li><a href="/app/doron-swap">DoronSwap</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h5>Platform</h5>
+                    <ul class="footer-links">
+                        <li><a href="/app/bitcoin">Dashboard</a></li>
+                        <li><a href="/app/user-profile">My Account</a></li>
+                        <li><a href="/app/deposit-withdraw">Wallet</a></li>
+                        <li><a href="/app/customer-transactions">Transactions</a></li>
+                        <li><a href="/app/referrals-customers">Referrals</a></li>
+                        <li><a href="/app/analytics">Analytics</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h5>Support</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://web.doronpay.com/">Help Center</a></li>
+                        <li><a href="https://web.doronpay.com/">Live Chat</a></li>
+                        <li><a href="https://web.doronpay.com/">Notifications</a></li>
+                        <li><a href="mailto:info@web.doronpay.com">Contact Us</a></li>
+                        <li><a href="tel:+1 778 800 9968">+1 778 800 9968</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h5>Company</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://web.doronpay.com/">About Us</a></li>
+                        <li><a href="https://web.doronpay.com/">Careers</a></li>
+                        <li><a href="https://web.doronpay.com/">Blog</a></li>
+                        <li><a href="https://web.doronpay.com/">Press</a></li>
+                        <li><a href="https://web.doronpay.com/">Partners</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h5>Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="https://web.doronpay.com/">Privacy Policy</a></li>
+                        <li><a href="https://web.doronpay.com/">Terms of Service</a></li>
+                        <li><a href="https://web.doronpay.com/">AML Policy</a></li>
+                        <li><a href="https://web.doronpay.com/">Compliance</a></li>
+                        <li><a href="https://web.doronpay.com/">Fee Schedule</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="footer-newsletter">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <h4>Stay Updated</h4>
+                        <p>Get the latest crypto news, market updates, and exclusive offers</p>
+                    </div>
+                    <div class="newsletter-form">
+                        <div class="input-group">
+                            <input type="email" placeholder="Enter your email address" [(ngModel)]="newsletterEmail"
+                                class="newsletter-input">
+                            <button class="newsletter-btn" (click)="subscribeNewsletter()" [disabled]="isSubscribing">
+                                <span *ngIf="!isSubscribing">Subscribe</span>
+                                <i *ngIf="isSubscribing" class="ri-loader-4-line spinning"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media & App Downloads -->
+            <div class="footer-social">
+                <div class="social-section">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="https://x.com/doronpay?s=21" target="_blank" class="social-link twitter">
+                            <i class="ri-twitter-x-fill"></i>
+                        </a>
+                        <a href="https://facebook.com/doronpay" target="_blank" class="social-link facebook">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="https://instagram.com/doronpay" target="_blank" class="social-link instagram">
+                            <i class="ri-instagram-fill"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/doronpay/" target="_blank"
+                            class="social-link linkedin">
+                            <i class="ri-linkedin-fill"></i>
+                        </a>
+                        <a href="https://t.me/doronpay" target="_blank" class="social-link telegram">
+                            <i class="ri-telegram-fill"></i>
+                        </a>
+                        <a href="https://discord.gg/doronpay" target="_blank" class="social-link discord">
+                            <i class="ri-discord-fill"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="app-downloads">
+                    <h5>Download Our App</h5>
+                    <div class="download-buttons">
+                        <a href="#" class="download-btn">
+                            <i class="ri-google-play-fill"></i>
+                            <div class="download-text">
+                                <span class="small">Get it on</span>
+                                <span class="large">Google Play</span>
+                            </div>
+                        </a>
+                        <a href="#" class="download-btn">
+                            <i class="ri-apple-fill"></i>
+                            <div class="download-text">
+                                <span class="small">Download on the</span>
+                                <span class="large">App Store</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <!-- <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <div class="footer-left">
+          <span>&copy; {{ currentYear }} DoronPay Ltd. All rights reserved.</span>
+          <span class="separator">•</span>
+          <span>Licensed by Bank of Ghana</span>
+        </div>
+        
+        <div class="footer-center">
+          <div class="currency-rates">
+            <span class="rate-item">BTC: ${{ btcPrice | number:'1.0-0' }}</span>
+            <span class="rate-item">ETH: ${{ ethPrice | number:'1.0-0' }}</span>
+            <span class="rate-item">USDT: ${{ usdtPrice | number:'1.2-2' }}</span>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <span>Powered by DoronPay Technology</span>
+          <div class="status-indicator">
+            <span class="status-dot" [class.online]="systemStatus === 'online'"></span>
+            <span class="status-text">{{ systemStatusText }}</span>
+          </div>
+        </div>
+      </div>
+    </div> -->
+        </div>
+    </div>
 
     <script>
         function handleSubmit(event) {
