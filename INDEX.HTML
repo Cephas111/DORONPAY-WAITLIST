@@ -900,20 +900,8 @@
         .download-buttons {
             display: flex;
             gap: 0.75rem;
-
-            @media (max-width: 768px) {
-                justify-content: center;
-            }
-
-            @media (max-width: 580px) {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.6rem;
-            }
-
-            @media (max-width: 480px) {
-                gap: 0.5rem;
-            }
+            justify-content: center;
+            margin-bottom: 32px;
         }
 
         .download-btn {
@@ -927,6 +915,7 @@
             color: #fff;
             text-decoration: none;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
 
             @media (max-width: 580px) {
                 width: 100%;
@@ -976,6 +965,59 @@
                     }
                 }
             }
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+        }
+
+        .store-btn.playstore i {
+            font-size: 1.5rem;
+            color: #3ddc84;
+        }
+
+        .store-btn.appstore i {
+            font-size: 1.5rem;
+            color: #f7931a;
+        }
+
+        .store-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #f7931a;
+            transform: translateY(-1px);
+        }
+
+        .store-icon {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+        }
+
+        .store-btn .download-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .store-btn .small {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .store-btn .large {
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         /* // Footer Bottom */
@@ -1270,16 +1312,18 @@
 
         <div class="download-buttons">
             <a href="#" class="store-btn playstore">
-                <img class="store-icon"
-                    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                    alt="Play Store" style="height:28px;width:auto;">
-                Play Store
+                <i class="ri-google-play-fill"></i>
+                <div class="download-text">
+                    <span class="small">Get it on</span>
+                    <span class="large">Google Play</span>
+                </div>
             </a>
             <a href="#" class="store-btn appstore">
-                <img class="store-icon"
-                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                    alt="App Store" style="height:28px;width:auto;">
-                App Store
+                <i class="ri-apple-fill"></i>
+                <div class="download-text">
+                    <span class="small">Download on the</span>
+                    <span class="large">App Store</span>
+                </div>
             </a>
         </div>
 
