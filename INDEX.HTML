@@ -1344,6 +1344,32 @@
 
     </main>
 
+    <!-- Leaderboard Section -->
+    <section id="leaderboard-section" style="max-width:1200px;margin:40px auto 0 auto;padding:40px 32px 32px 32px;background:linear-gradient(135deg, #000 0%, #0f172a 60%, #000000 95%, #000 100%);border-radius:24px;box-shadow:0 4px 32px rgba(0,0,0,0.18);position:relative;z-index:2;">
+        <h2 style="color:#f97316;font-size:2rem;font-weight:700;margin-bottom:18px;text-align:center;">Leaderboard</h2>
+        <div style="overflow-x:auto;">
+            <table id="leaderboard-table" style="width:100%;border-collapse:collapse;background:rgba(0,0,0,0.1);">
+                <thead>
+                    <tr style="background:rgba(14,165,233,0.12);color:#fff;">
+                        <th style="padding:12px 8px;">Position</th>
+                        <th style="padding:12px 8px;">First Name</th>
+                        <th style="padding:12px 8px;">Last Name</th>
+                        <th style="padding:12px 8px;">Referral Code</th>
+                        <th style="padding:12px 8px;"># Referrals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Leaderboard rows will be injected here -->
+                </tbody>
+            </table>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;margin-top:18px;gap:12px;">
+            <button id="prevPageBtn" style="padding:8px 18px;border-radius:8px;border:none;background:#0ea5e9;color:#fff;font-weight:600;cursor:pointer;transition:background 0.2s;" disabled>Prev</button>
+            <span id="pageIndicator" style="color:#f97316;font-weight:600;"></span>
+            <button id="nextPageBtn" style="padding:8px 18px;border-radius:8px;border:none;background:#0ea5e9;color:#fff;font-weight:600;cursor:pointer;transition:background 0.2s;">Next</button>
+        </div>
+    </section>
+
     <!-- default-footer.component.html -->
     <div class="footer-container">
         <div class="footer-content">
@@ -1562,6 +1588,75 @@
                     shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
                 });
             });
+        });
+
+        // Leaderboard Data & Pagination
+        const leaderboardData = [
+            { first: "Alice", last: "Johnson", code: "ALC123", referrals: 42 },
+            { first: "Bob", last: "Smith", code: "BOB456", referrals: 38 },
+            { first: "Carol", last: "Williams", code: "CAR789", referrals: 35 },
+            { first: "David", last: "Brown", code: "DAV321", referrals: 33 },
+            { first: "Eve", last: "Jones", code: "EVE654", referrals: 30 },
+            { first: "Frank", last: "Garcia", code: "FRA987", referrals: 28 },
+            { first: "Grace", last: "Martinez", code: "GRA159", referrals: 27 },
+            { first: "Henry", last: "Lee", code: "HEN753", referrals: 25 },
+            { first: "Ivy", last: "Walker", code: "IVY852", referrals: 23 },
+            { first: "Jack", last: "Hall", code: "JAC951", referrals: 22 },
+            { first: "Kathy", last: "Allen", code: "KAT357", referrals: 21 },
+            { first: "Leo", last: "Young", code: "LEO258", referrals: 20 },
+            { first: "Mona", last: "King", code: "MON654", referrals: 19 },
+            { first: "Nina", last: "Wright", code: "NIN147", referrals: 18 },
+            { first: "Oscar", last: "Scott", code: "OSC369", referrals: 17 },
+            { first: "Paul", last: "Green", code: "PAU741", referrals: 16 },
+            { first: "Quinn", last: "Adams", code: "QUI852", referrals: 15 },
+            { first: "Rita", last: "Baker", code: "RIT963", referrals: 14 },
+            { first: "Sam", last: "Nelson", code: "SAM159", referrals: 13 },
+            { first: "Tina", last: "Carter", code: "TIN357", referrals: 12 }
+        ];
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        function renderLeaderboardPage(page) {
+            const tbody = document.querySelector('#leaderboard-table tbody');
+            tbody.innerHTML = '';
+            const start = (page - 1) * rowsPerPage;
+            const end = Math.min(start + rowsPerPage, leaderboardData.length);
+            for (let i = start; i < end; i++) {
+                const entry = leaderboardData[i];
+                const tr = document.createElement('tr');
+                tr.style.background = i % 2 === 0 ? 'rgba(14,165,233,0.06)' : 'transparent';
+                tr.innerHTML = `
+                    <td style="padding:10px 8px;text-align:center;color:#f97316;font-weight:600;">${i + 1}</td>
+                    <td style="padding:10px 8px;text-align:center;color:#fff;">${entry.first}</td>
+                    <td style="padding:10px 8px;text-align:center;color:#fff;">${entry.last}</td>
+                    <td style="padding:10px 8px;text-align:center;color:#0ea5e9;font-weight:600;">${entry.code}</td>
+                    <td style="padding:10px 8px;text-align:center;color:#fff;">${entry.referrals}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+            // Update pagination
+            document.getElementById('pageIndicator').textContent = `Page ${page} of ${Math.ceil(leaderboardData.length / rowsPerPage)}`;
+            document.getElementById('prevPageBtn').disabled = page === 1;
+            document.getElementById('nextPageBtn').disabled = end >= leaderboardData.length;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // ...existing code...
+
+            // Leaderboard pagination
+            renderLeaderboardPage(currentPage);
+            document.getElementById('prevPageBtn').onclick = function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderLeaderboardPage(currentPage);
+                }
+            };
+            document.getElementById('nextPageBtn').onclick = function () {
+                if ((currentPage * rowsPerPage) < leaderboardData.length) {
+                    currentPage++;
+                    renderLeaderboardPage(currentPage);
+                }
+            };
         });
     </script>
 </body>
