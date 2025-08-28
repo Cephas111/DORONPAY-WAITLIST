@@ -1,1503 +1,1593 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doronpay - Pay fast, pay smart</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #000 0%,
+          #0f172a 60%,
+          #000000 95%,
+          #000 100%
+        );
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Futuristic grid overlay */
+      .bg-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+        background: repeating-linear-gradient(
+            to right,
+            rgba(3, 4, 5, 0.08) 0px,
+            rgba(14, 165, 233, 0.08) 1px,
+            transparent 1px,
+            transparent 80px
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.08) 0px,
+            rgba(14, 165, 233, 0.08) 1px,
+            transparent 1px,
+            transparent 80px
+          );
+        /* Add a subtle black overlay for depth */
+        box-shadow: inset 0 0 200px 60px #000;
+      }
+
+      /* Neon glow effect for grid lines */
+      .bg-grid::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        box-shadow: 0 0 80px 20px #0ea5e9, 0 0 120px 40px #f97316;
+        opacity: 0.15;
+      }
+
+      /* Header */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 18px;
+        color: #ffffff;
+      }
+
+      .logo img {
+        height: 40px;
+        width: auto;
+        display: block;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 25px;
+      }
+
+      .nav-menu a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-menu a:hover {
+        color: #f97316;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .nav-right a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .get-started-btn {
+        background: #f97316;
+        color: white !important;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .get-started-btn:hover {
+        background: #ea580c;
+        transform: translateY(-1px);
+      }
+
+      .nav-btn {
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(90deg, #0ea5e9 0%, #f97316 100%);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      .nav-btn.login {
+        background: #222;
+        color: #f97316;
+        border: 1px solid #f97316;
+      }
+
+      .nav-btn:hover {
+        background: linear-gradient(90deg, #f97316 0%, #0ea5e9 100%);
+        transform: translateY(-2px) scale(1.04);
+      }
+
+      /* Main Content */
+      .main-content {
+        text-align: center;
+        /* padding: 60px 20px; */
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 5;
+      }
+
+      .waitlist-badge {
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #f97316;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .main-title {
+        font-size: clamp(48px, 8vw, 72px);
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.1;
+        margin-bottom: 40px;
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 50px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Email Form */
+      .email-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .email-input-container {
+        display: flex;
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        border-radius: 30px;
+        padding: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 400px;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .email-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        background: transparent;
+        color: #ffffff;
+      }
+
+      .email-input::placeholder {
+        color: #64748b;
+      }
+
+      .join-btn {
+        background: #f97316;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 26px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .join-btn:hover {
+        background: #ea580c;
+        transform: translateY(-1px);
+      }
+
+      /* Rating */
+      .rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #94a3b8;
+        font-size: 14px;
+      }
+
+      .stars {
+        display: flex;
+        gap: 2px;
+      }
+
+      .star {
+        color: #f97316;
+        font-size: 16px;
+      }
+
+      /* 3D Cube */
+      .cube-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        margin-top: 50px;
+        perspective: 1000px;
+      }
+
+      .cube {
+        width: 120px;
+        height: 120px;
+        position: relative;
+        transform-style: preserve-3d;
+        animation: rotateCube 8s infinite linear;
+        box-shadow: 0 0 40px 10px #0ea5e9, 0 0 60px 20px #f97316;
+      }
+
+      .cube-face {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #f97316, #ea580c, #dc2626);
+        border: 2px solid #0ea5e9;
+        opacity: 0.9;
+        box-shadow: 0 0 20px 4px #ffffff, 0 0 30px 8px #f97316;
+      }
+
+      .front {
+        transform: rotateY(0deg) translateZ(60px);
+      }
+
+      .back {
+        transform: rotateY(180deg) translateZ(60px);
+      }
+
+      .right {
+        transform: rotateY(90deg) translateZ(60px);
+      }
+
+      .left {
+        transform: rotateY(-90deg) translateZ(60px);
+      }
+
+      .top {
+        transform: rotateX(90deg) translateZ(60px);
+      }
+
+      .bottom {
+        transform: rotateX(-90deg) translateZ(60px);
+      }
+
+      @keyframes rotateCube {
+        0% {
+          transform: rotateX(0deg) rotateY(0deg);
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #000 0%, #0f172a 60%, #000000 95%, #000 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+        100% {
+          transform: rotateX(360deg) rotateY(360deg);
+        }
+      }
+
+      /* Background decorative elements */
+      .bg-decoration {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.18),
+          rgba(249, 115, 22, 0.18)
+        );
+        filter: blur(2px);
+        box-shadow: 0 0 30px 10px #0ea5e9, 0 0 40px 10px #f97316;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .shape-1 {
+        width: 120px;
+        height: 120px;
+        top: 18%;
+        left: 8%;
+        animation-delay: 0s;
+      }
+
+      .shape-2 {
+        width: 80px;
+        height: 80px;
+        top: 65%;
+        right: 12%;
+        animation-delay: 2s;
+      }
+
+      .shape-3 {
+        width: 100px;
+        height: 100px;
+        bottom: 18%;
+        left: 22%;
+        animation-delay: 4s;
+      }
+
+      /* Add hexagon shapes for crypto vibe */
+      .hex-shape {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        top: 40%;
+        left: 70%;
+        background: linear-gradient(135deg, #0ea5e9 60%, #f97316 100%);
+        clip-path: polygon(
+          25% 6.7%,
+          75% 6.7%,
+          100% 50%,
+          75% 93.3%,
+          25% 93.3%,
+          0% 50%
+        );
+        opacity: 0.7;
+        box-shadow: 0 0 30px 10px #0ea5e9;
+        animation: hexFloat 7s ease-in-out infinite;
+      }
+
+      @keyframes hexFloat {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
         }
 
-        /* Futuristic grid overlay */
-        .bg-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            background: repeating-linear-gradient(to right, rgba(3, 4, 5, 0.08) 0px, rgba(14, 165, 233, 0.08) 1px, transparent 1px, transparent 80px), repeating-linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 0px, rgba(14, 165, 233, 0.08) 1px, transparent 1px, transparent 80px);
-            /* Add a subtle black overlay for depth */
-            box-shadow: inset 0 0 200px 60px #000;
+        50% {
+          transform: translateY(-25px) rotate(180deg);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
         }
 
-        /* Neon glow effect for grid lines */
-        .bg-grid::after {
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      /* 
+// default-footer.component.scss */
+      .footer-container {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+          135deg,
+          #090909 0%,
+          #0a0a0a 50%,
+          #0c0c0c 100%
+        );
+        border-top: 1px solid rgba(255, 165, 0, 0.1);
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #f7931a, transparent);
+        }
+      }
+
+      .footer-main > * {
+        min-width: 0;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 3rem 0 0;
+        color: #d4d4d4;
+
+        @media (max-width: 768px) {
+          padding: 2rem 1rem 0;
+        }
+
+        @media (max-width: 480px) {
+          padding: 1.5rem 0.75rem 0;
+        }
+      }
+
+      /* // Main Footer Sections */
+      .footer-main {
+        display: grid;
+        grid-template-columns: 2fr repeat(5, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 1200px) {
+          grid-template-columns: 2fr repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+          gap: 1.25rem;
+          margin-bottom: 1.25rem;
+        }
+      }
+
+      .footer-section {
+        h5 {
+          color: #fff;
+          font-size: 1rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          position: relative;
+
+          @media (max-width: 480px) {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+          }
+
+          &::after {
             content: "";
             position: absolute;
-            top: 0;
+            bottom: -4px;
             left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            box-shadow: 0 0 80px 20px #0ea5e9, 0 0 120px 40px #f97316;
-            opacity: 0.15;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, #f7931a, #ff8c00);
+          }
+        }
+      }
+
+      /* // Brand Section */
+      .footer-brand {
+        @media (max-width: 768px) {
+          text-align: center;
+          margin-bottom: 1rem;
         }
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            position: relative;
-            z-index: 10;
-        }
+        .brand-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
+          @media (max-width: 768px) {
+            justify-content: center;
+          }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 18px;
-            color: #ffffff;
-        }
+          @media (max-width: 480px) {
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+          }
 
-        .logo img {
+          .footer-logo {
+            width: 40px;
             height: 40px;
-            width: auto;
-            display: block;
-        }
 
-        .nav-menu {
-            display: flex;
-            gap: 25px;
-        }
+            @media (max-width: 480px) {
+              width: 35px;
+              height: 35px;
+            }
+          }
 
-        .nav-menu a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: #f97316;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .nav-right a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .get-started-btn {
-            background: #f97316;
-            color: white !important;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .get-started-btn:hover {
-            background: #ea580c;
-            transform: translateY(-1px);
-        }
-
-        .nav-btn {
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 15px;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(90deg, #0ea5e9 0%, #f97316 100%);
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .nav-btn.login {
-            background: #222;
-            color: #f97316;
-            border: 1px solid #f97316;
-        }
-
-        .nav-btn:hover {
-            background: linear-gradient(90deg, #f97316 0%, #0ea5e9 100%);
-            transform: translateY(-2px) scale(1.04);
-        }
-
-        /* Main Content */
-        .main-content {
-            text-align: center;
-            /* padding: 60px 20px; */
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
-
-        .waitlist-badge {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #f97316;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .main-title {
-            font-size: clamp(48px, 8vw, 72px);
+          h4 {
+            color: #f7931a;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #ffffff;
-            line-height: 1.1;
-            margin-bottom: 40px;
-            letter-spacing: -0.02em;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Email Form */
-        .email-form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .email-input-container {
-            display: flex;
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            border-radius: 30px;
-            padding: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .email-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            background: transparent;
-            color: #ffffff;
-        }
-
-        .email-input::placeholder {
-            color: #64748b;
-        }
-
-        .join-btn {
-            background: #f97316;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 26px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .join-btn:hover {
-            background: #ea580c;
-            transform: translateY(-1px);
-        }
-
-        /* Rating */
-        .rating {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-
-        .stars {
-            display: flex;
-            gap: 2px;
-        }
-
-        .star {
-            color: #f97316;
-            font-size: 16px;
-        }
-
-        /* 3D Cube */
-        .cube-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 300px;
-            margin-top: 50px;
-            perspective: 1000px;
-        }
-
-        .cube {
-            width: 120px;
-            height: 120px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotateCube 8s infinite linear;
-            box-shadow: 0 0 40px 10px #0ea5e9, 0 0 60px 20px #f97316;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #f97316, #ea580c, #dc2626);
-            border: 2px solid #0ea5e9;
-            opacity: 0.9;
-            box-shadow: 0 0 20px 4px #ffffff, 0 0 30px 8px #f97316;
-        }
-
-        .front {
-            transform: rotateY(0deg) translateZ(60px);
-        }
-
-        .back {
-            transform: rotateY(180deg) translateZ(60px);
-        }
-
-        .right {
-            transform: rotateY(90deg) translateZ(60px);
-        }
-
-        .left {
-            transform: rotateY(-90deg) translateZ(60px);
-        }
-
-        .top {
-            transform: rotateX(90deg) translateZ(60px);
-        }
-
-        .bottom {
-            transform: rotateX(-90deg) translateZ(60px);
-        }
-
-        @keyframes rotateCube {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg);
-            }
-
-            100% {
-                transform: rotateX(360deg) rotateY(360deg);
-            }
-        }
-
-        /* Background decorative elements */
-        .bg-decoration {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(249, 115, 22, 0.18));
-            filter: blur(2px);
-            box-shadow: 0 0 30px 10px #0ea5e9, 0 0 40px 10px #f97316;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .shape-1 {
-            width: 120px;
-            height: 120px;
-            top: 18%;
-            left: 8%;
-            animation-delay: 0s;
-        }
-
-        .shape-2 {
-            width: 80px;
-            height: 80px;
-            top: 65%;
-            right: 12%;
-            animation-delay: 2s;
-        }
-
-        .shape-3 {
-            width: 100px;
-            height: 100px;
-            bottom: 18%;
-            left: 22%;
-            animation-delay: 4s;
-        }
-
-        /* Add hexagon shapes for crypto vibe */
-        .hex-shape {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            top: 40%;
-            left: 70%;
-            background: linear-gradient(135deg, #0ea5e9 60%, #f97316 100%);
-            clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
-            opacity: 0.7;
-            box-shadow: 0 0 30px 10px #0ea5e9;
-            animation: hexFloat 7s ease-in-out infinite;
-        }
-
-        @keyframes hexFloat {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-25px) rotate(180deg);
-            }
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-            }
-        }
-
-
-
-
-        /* 
-// default-footer.component.scss */
-        .footer-container {
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #090909 0%, #0a0a0a 50%, #0c0c0c 100%);
-            border-top: 1px solid rgba(255, 165, 0, 0.1);
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background: linear-gradient(90deg, transparent, #f7931a, transparent);
-            }
-        }
-
-        .footer-main>* {
-            min-width: 0;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 0 0;
-            color: #d4d4d4;
-
-            @media (max-width: 768px) {
-                padding: 2rem 1rem 0;
-            }
-
-            @media (max-width: 480px) {
-                padding: 1.5rem 0.75rem 0;
-            }
-        }
-
-        /* // Main Footer Sections */
-        .footer-main {
-            display: grid;
-            grid-template-columns: 2fr repeat(5, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-
-            @media (max-width: 1200px) {
-                grid-template-columns: 2fr repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            @media (max-width: 968px) {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            @media (max-width: 768px) {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-
-            @media (max-width: 480px) {
-                gap: 1.25rem;
-                margin-bottom: 1.25rem;
-            }
-        }
-
-        .footer-section {
-            h5 {
-                color: #fff;
-                font-size: 1rem;
-                font-weight: 600;
-                margin-bottom: 1rem;
-                position: relative;
-
-                @media (max-width: 480px) {
-                    font-size: 0.95rem;
-                    margin-bottom: 0.75rem;
-                }
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    bottom: -4px;
-                    left: 0;
-                    width: 30px;
-                    height: 2px;
-                    background: linear-gradient(90deg, #f7931a, #ff8c00);
-                }
-            }
-        }
-
-        /* // Brand Section */
-        .footer-brand {
-            @media (max-width: 768px) {
-                text-align: center;
-                margin-bottom: 1rem;
-            }
-
-            .brand-logo {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                margin-bottom: 1rem;
-
-                @media (max-width: 768px) {
-                    justify-content: center;
-                }
-
-                @media (max-width: 480px) {
-                    gap: 0.5rem;
-                    margin-bottom: 0.75rem;
-                }
-
-                .footer-logo {
-                    width: 40px;
-                    height: 40px;
-
-                    @media (max-width: 480px) {
-                        width: 35px;
-                        height: 35px;
-                    }
-                }
-
-                h4 {
-                    color: #f7931a;
-                    font-size: 1.5rem;
-                    font-weight: 700;
-                    margin: 0;
-
-                    @media (max-width: 480px) {
-                        font-size: 1.25rem;
-                    }
-                }
-            }
-
-            .brand-description {
-                font-size: 0.9rem;
-                line-height: 1.6;
-                color: rgba(255, 255, 255, 0.8);
-                margin-bottom: 1.5rem;
-
-                @media (max-width: 480px) {
-                    font-size: 0.85rem;
-                    margin-bottom: 1rem;
-                }
-            }
-        }
-
-        .security-badges {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-
-            @media (max-width: 768px) {
-                align-items: center;
-            }
-
-            @media (max-width: 480px) {
-                gap: 0.4rem;
-            }
-        }
-
-        .security-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
-
-            @media (max-width: 480px) {
-                font-size: 0.8rem;
-                gap: 0.4rem;
-            }
-
-            i {
-                color: #4caf50;
-                font-size: 1rem;
-
-                @media (max-width: 480px) {
-                    font-size: 0.9rem;
-                }
-            }
-        }
-
-        /* // Footer Links */
-        .footer-links {
-            list-style: none;
-            padding: 0;
             margin: 0;
 
-            @media (max-width: 768px) {
-                text-align: center;
+            @media (max-width: 480px) {
+              font-size: 1.25rem;
             }
-
-            li {
-                margin-bottom: 0.5rem;
-
-                @media (max-width: 480px) {
-                    margin-bottom: 0.4rem;
-                }
-
-                a {
-                    color: rgba(255, 255, 255, 0.7);
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                    transition: all 0.2s ease;
-                    display: inline-block;
-
-                    @media (max-width: 480px) {
-                        font-size: 0.85rem;
-                    }
-
-                    &:hover {
-                        color: #f7931a;
-                        transform: translateX(4px);
-
-                        @media (max-width: 768px) {
-                            transform: translateY(-2px);
-                        }
-                    }
-                }
-            }
+          }
         }
 
-        /* Newsletter Section */
+        .brand-description {
+          font-size: 0.9rem;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.8);
+          margin-bottom: 1.5rem;
+
+          @media (max-width: 480px) {
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+
+      .security-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        @media (max-width: 768px) {
+          align-items: center;
+        }
+
+        @media (max-width: 480px) {
+          gap: 0.4rem;
+        }
+      }
+
+      .security-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.9);
+
+        @media (max-width: 480px) {
+          font-size: 0.8rem;
+          gap: 0.4rem;
+        }
+
+        i {
+          color: #4caf50;
+          font-size: 1rem;
+
+          @media (max-width: 480px) {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      /* // Footer Links */
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        @media (max-width: 768px) {
+          text-align: center;
+        }
+
+        li {
+          margin-bottom: 0.5rem;
+
+          @media (max-width: 480px) {
+            margin-bottom: 0.4rem;
+          }
+
+          a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: inline-block;
+
+            @media (max-width: 480px) {
+              font-size: 0.85rem;
+            }
+
+            &:hover {
+              color: #f7931a;
+              transform: translateX(4px);
+
+              @media (max-width: 768px) {
+                transform: translateY(-2px);
+              }
+            }
+          }
+        }
+      }
+
+      /* Newsletter Section */
+      .footer-newsletter {
+        background: rgba(247, 147, 26, 0.05);
+        border: 1px solid rgba(247, 147, 26, 0.1);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 768px) {
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          border-radius: 12px;
+        }
+
+        @media (max-width: 480px) {
+          padding: 1.25rem;
+          margin-bottom: 1.25rem;
+        }
+
+        .newsletter-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 2rem;
+
+          @media (max-width: 768px) {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+          }
+
+          @media (max-width: 480px) {
+            gap: 1.25rem;
+          }
+        }
+
+        .newsletter-text {
+          @media (max-width: 768px) {
+            width: 100%;
+          }
+
+          h4 {
+            color: #fff;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+
+            @media (max-width: 480px) {
+              font-size: 1.1rem;
+              margin-bottom: 0.4rem;
+            }
+          }
+
+          p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+
+            @media (max-width: 480px) {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+
+      .input-group {
+        display: flex;
+        gap: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        min-width: 300px;
+
+        @media (max-width: 768px) {
+          width: 100%;
+          min-width: unset;
+          flex-direction: column;
+          border-radius: 8px;
+        }
+
+        .newsletter-input {
+          flex: 1;
+          padding: 0.875rem 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.05);
+          color: #fff;
+          font-size: 0.9rem;
+          outline: none;
+
+          @media (max-width: 768px) {
+            border-radius: 8px 8px 0 0;
+          }
+
+          @media (max-width: 480px) {
+            padding: 0.75rem 0.875rem;
+            font-size: 0.85rem;
+          }
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+
+          &:focus {
+            border-color: #f7931a;
+            background: rgba(255, 255, 255, 0.08);
+          }
+        }
+
+        .newsletter-btn {
+          padding: 0.875rem 1.5rem;
+          background: linear-gradient(135deg, #f7931a, #ff8c00);
+          border: none;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          @media (max-width: 768px) {
+            border-radius: 0 0 8px 8px;
+          }
+
+          @media (max-width: 480px) {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+          }
+
+          &:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff8c00, #f7931a);
+            transform: translateY(-1px);
+          }
+
+          &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+          }
+
+          .spinning {
+            animation: spin 1s linear infinite;
+          }
+        }
+      }
+
+      /* // Social Media Section */
+      .footer-social {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        gap: 2rem;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          gap: 1.5rem;
+          text-align: center;
+        }
+
+        @media (max-width: 480px) {
+          margin-bottom: 1.5rem;
+          gap: 1.25rem;
+        }
+      }
+
+      .social-section {
+        h5 {
+          color: #fff;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+
+          @media (max-width: 480px) {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+          }
+        }
+      }
+
+      .social-links {
+        display: flex;
+        gap: 0.75rem;
+
+        @media (max-width: 768px) {
+          justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+          gap: 0.6rem;
+        }
+      }
+
+      .social-link {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        @media (max-width: 480px) {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+        }
+
+        i {
+          font-size: 1.2rem;
+
+          @media (max-width: 480px) {
+            font-size: 1.1rem;
+          }
+        }
+
+        &.twitter {
+          background: rgba(29, 161, 242, 0.1);
+        }
+
+        &.facebook {
+          background: rgba(24, 119, 242, 0.1);
+        }
+
+        &.instagram {
+          background: rgba(225, 48, 108, 0.1);
+        }
+
+        &.linkedin {
+          background: rgba(0, 119, 181, 0.1);
+        }
+
+        &.telegram {
+          background: rgba(0, 136, 204, 0.1);
+        }
+
+        &.discord {
+          background: rgba(114, 137, 218, 0.1);
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+          border-color: #f7931a;
+        }
+      }
+
+      /* // App Downloads */
+      .app-downloads {
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+
+        h5 {
+          color: #fff;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+
+          @media (max-width: 480px) {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+          }
+        }
+      }
+
+      .download-buttons {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-bottom: 32px;
+      }
+
+      .download-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+
+        @media (max-width: 580px) {
+          width: 100%;
+          max-width: 200px;
+        }
+
+        @media (max-width: 480px) {
+          padding: 0.65rem 0.875rem;
+          gap: 0.6rem;
+          border-radius: 10px;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: #f7931a;
+          transform: translateY(-1px);
+        }
+
+        i {
+          font-size: 1.5rem;
+          color: #f7931a;
+
+          @media (max-width: 480px) {
+            font-size: 1.3rem;
+          }
+        }
+
+        .download-text {
+          display: flex;
+          flex-direction: column;
+
+          .small {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+
+            @media (max-width: 480px) {
+              font-size: 0.7rem;
+            }
+          }
+
+          .large {
+            font-size: 0.9rem;
+            font-weight: 600;
+
+            @media (max-width: 480px) {
+              font-size: 0.85rem;
+            }
+          }
+        }
+      }
+
+      .store-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+      }
+
+      .store-btn.playstore i {
+        font-size: 1.5rem;
+        color: #3ddc84;
+      }
+
+      .store-btn.appstore i {
+        font-size: 1.5rem;
+        color: #f7931a;
+      }
+
+      .store-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #f7931a;
+        transform: translateY(-1px);
+      }
+
+      .store-icon {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+      }
+
+      .store-btn .download-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .store-btn .small {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .store-btn .large {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      /* // Footer Bottom */
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem 0;
+
+        @media (max-width: 480px) {
+          padding: 1.25rem 0;
+        }
+      }
+
+      .footer-bottom-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+
+        @media (max-width: 968px) {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 0.8rem;
+          gap: 0.75rem;
+        }
+      }
+
+      .footer-left,
+      .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        @media (max-width: 580px) {
+          flex-direction: column;
+          gap: 0.25rem;
+          text-align: center;
+        }
+
+        .separator {
+          color: rgba(255, 255, 255, 0.3);
+
+          @media (max-width: 580px) {
+            display: none;
+          }
+        }
+      }
+
+      .currency-rates {
+        display: flex;
+        gap: 1rem;
+
+        @media (max-width: 580px) {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        @media (max-width: 480px) {
+          gap: 0.2rem;
+        }
+
+        .rate-item {
+          color: rgba(255, 255, 255, 0.8);
+          font-weight: 500;
+
+          @media (max-width: 480px) {
+            font-size: 0.8rem;
+          }
+        }
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        @media (max-width: 480px) {
+          gap: 0.4rem;
+        }
+
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #666;
+
+          @media (max-width: 480px) {
+            width: 7px;
+            height: 7px;
+          }
+
+          &.online {
+            background: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+          }
+        }
+
+        .status-text {
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.7);
+
+          @media (max-width: 480px) {
+            font-size: 0.75rem;
+          }
+        }
+      }
+
+      /* // Animations */
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* // Additional mobile-specific improvements */
+      @media (max-width: 375px) {
+        .footer-content {
+          padding: 1.25rem 0.5rem 0;
+        }
+
         .footer-newsletter {
-            background: rgba(247, 147, 26, 0.05);
-            border: 1px solid rgba(247, 147, 26, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-
-            @media (max-width: 768px) {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-                border-radius: 12px;
-            }
-
-            @media (max-width: 480px) {
-                padding: 1.25rem;
-                margin-bottom: 1.25rem;
-            }
-
-            .newsletter-content {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 2rem;
-
-                @media (max-width: 768px) {
-                    flex-direction: column;
-                    text-align: center;
-                    gap: 1.5rem;
-                }
-
-                @media (max-width: 480px) {
-                    gap: 1.25rem;
-                }
-            }
-
-            .newsletter-text {
-                @media (max-width: 768px) {
-                    width: 100%;
-                }
-
-                h4 {
-                    color: #fff;
-                    font-size: 1.25rem;
-                    margin-bottom: 0.5rem;
-
-                    @media (max-width: 480px) {
-                        font-size: 1.1rem;
-                        margin-bottom: 0.4rem;
-                    }
-                }
-
-                p {
-                    color: rgba(255, 255, 255, 0.8);
-                    margin: 0;
-
-                    @media (max-width: 480px) {
-                        font-size: 0.9rem;
-                    }
-                }
-            }
-        }
-
-        .input-group {
-            display: flex;
-            gap: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-            min-width: 300px;
-
-            @media (max-width: 768px) {
-                width: 100%;
-                min-width: unset;
-                flex-direction: column;
-                border-radius: 8px;
-            }
-
-            .newsletter-input {
-                flex: 1;
-                padding: 0.875rem 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                background: rgba(255, 255, 255, 0.05);
-                color: #fff;
-                font-size: 0.9rem;
-                outline: none;
-
-                @media (max-width: 768px) {
-                    border-radius: 8px 8px 0 0;
-                }
-
-                @media (max-width: 480px) {
-                    padding: 0.75rem 0.875rem;
-                    font-size: 0.85rem;
-                }
-
-                &::placeholder {
-                    color: rgba(255, 255, 255, 0.5);
-                }
-
-                &:focus {
-                    border-color: #f7931a;
-                    background: rgba(255, 255, 255, 0.08);
-                }
-            }
-
-            .newsletter-btn {
-                padding: 0.875rem 1.5rem;
-                background: linear-gradient(135deg, #f7931a, #ff8c00);
-                border: none;
-                color: white;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.2s ease;
-
-                @media (max-width: 768px) {
-                    border-radius: 0 0 8px 8px;
-                }
-
-                @media (max-width: 480px) {
-                    padding: 0.75rem 1.25rem;
-                    font-size: 0.9rem;
-                }
-
-                &:hover:not(:disabled) {
-                    background: linear-gradient(135deg, #ff8c00, #f7931a);
-                    transform: translateY(-1px);
-                }
-
-                &:disabled {
-                    opacity: 0.7;
-                    cursor: not-allowed;
-                }
-
-                .spinning {
-                    animation: spin 1s linear infinite;
-                }
-            }
-        }
-
-        /* // Social Media Section */
-        .footer-social {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 2rem;
-            gap: 2rem;
-
-            @media (max-width: 768px) {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            @media (max-width: 480px) {
-                margin-bottom: 1.5rem;
-                gap: 1.25rem;
-            }
-        }
-
-        .social-section {
-            h5 {
-                color: #fff;
-                font-size: 1rem;
-                margin-bottom: 1rem;
-
-                @media (max-width: 480px) {
-                    font-size: 0.95rem;
-                    margin-bottom: 0.75rem;
-                }
-            }
+          padding: 1rem;
         }
 
         .social-links {
-            display: flex;
-            gap: 0.75rem;
-
-            @media (max-width: 768px) {
-                justify-content: center;
-            }
-
-            @media (max-width: 480px) {
-                gap: 0.6rem;
-            }
+          gap: 0.5rem;
         }
 
         .social-link {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+          width: 36px;
+          height: 36px;
 
-            @media (max-width: 480px) {
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-            }
+          i {
+            font-size: 1rem;
+          }
+        }
+      }
 
-            i {
-                font-size: 1.2rem;
-
-                @media (max-width: 480px) {
-                    font-size: 1.1rem;
-                }
-            }
-
-            &.twitter {
-                background: rgba(29, 161, 242, 0.1);
-            }
-
-            &.facebook {
-                background: rgba(24, 119, 242, 0.1);
-            }
-
-            &.instagram {
-                background: rgba(225, 48, 108, 0.1);
-            }
-
-            &.linkedin {
-                background: rgba(0, 119, 181, 0.1);
-            }
-
-            &.telegram {
-                background: rgba(0, 136, 204, 0.1);
-            }
-
-            &.discord {
-                background: rgba(114, 137, 218, 0.1);
-            }
-
-            &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
-                border-color: #f7931a;
-            }
+      /* Responsive */
+      @media (max-width: 768px) {
+        .header {
+          padding: 15px 20px;
+          flex-direction: column;
+          gap: 15px;
         }
 
-        /* // App Downloads */
-        .app-downloads {
-            @media (max-width: 768px) {
-                width: 100%;
-            }
-
-            h5 {
-                color: #fff;
-                font-size: 1rem;
-                margin-bottom: 1rem;
-
-                @media (max-width: 480px) {
-                    font-size: 0.95rem;
-                    margin-bottom: 0.75rem;
-                }
-            }
+        .nav-menu {
+          display: none;
         }
 
-        .download-buttons {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            margin-bottom: 32px;
+        .main-content {
+          padding: 40px 20px;
         }
 
-        .download-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
-
-            @media (max-width: 580px) {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            @media (max-width: 480px) {
-                padding: 0.65rem 0.875rem;
-                gap: 0.6rem;
-                border-radius: 10px;
-            }
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.08);
-                border-color: #f7931a;
-                transform: translateY(-1px);
-            }
-
-            i {
-                font-size: 1.5rem;
-                color: #f7931a;
-
-                @media (max-width: 480px) {
-                    font-size: 1.3rem;
-                }
-            }
-
-            .download-text {
-                display: flex;
-                flex-direction: column;
-
-                .small {
-                    font-size: 0.75rem;
-                    color: rgba(255, 255, 255, 0.7);
-
-                    @media (max-width: 480px) {
-                        font-size: 0.7rem;
-                    }
-                }
-
-                .large {
-                    font-size: 0.9rem;
-                    font-weight: 600;
-
-                    @media (max-width: 480px) {
-                        font-size: 0.85rem;
-                    }
-                }
-            }
+        .email-input-container {
+          flex-direction: column;
+          gap: 10px;
+          padding: 10px;
         }
 
-        .store-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+        .email-input {
+          text-align: center;
         }
 
-        .store-btn.playstore i {
-            font-size: 1.5rem;
-            color: #3ddc84;
+        .cube {
+          width: 80px;
+          height: 80px;
         }
 
-        .store-btn.appstore i {
-            font-size: 1.5rem;
-            color: #f7931a;
+        .cube-face {
+          width: 80px;
+          height: 80px;
         }
 
-        .store-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #f7931a;
-            transform: translateY(-1px);
+        .front,
+        .back {
+          transform: rotateY(0deg) translateZ(40px);
         }
 
-        .store-icon {
-            width: 28px;
-            height: 28px;
-            display: inline-block;
+        .right {
+          transform: rotateY(90deg) translateZ(40px);
         }
 
-        .store-btn .download-text {
-            display: flex;
-            flex-direction: column;
+        .left {
+          transform: rotateY(-90deg) translateZ(40px);
         }
 
-        .store-btn .small {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.7);
+        .top {
+          transform: rotateX(90deg) translateZ(40px);
         }
 
-        .store-btn .large {
-            font-size: 0.9rem;
-            font-weight: 600;
+        .bottom {
+          transform: rotateX(-90deg) translateZ(40px);
         }
 
-        /* // Footer Bottom */
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.5rem 0;
-
-            @media (max-width: 480px) {
-                padding: 1.25rem 0;
-            }
+        .cube-container {
+          display: none;
         }
+      }
 
-        .footer-bottom-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
+      .download-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 32px;
+      }
 
-            @media (max-width: 968px) {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
+      .store-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #222;
+        color: #fff;
+        border-radius: 16px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 16px;
+        border: 1px solid #0ea5e9;
+        box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
+        text-decoration: none;
+        transition: background 0.2s, border 0.2s, transform 0.2s;
+      }
 
-            @media (max-width: 480px) {
-                font-size: 0.8rem;
-                gap: 0.75rem;
-            }
-        }
+      .store-btn.appstore {
+        border-color: #f97316;
+      }
 
-        .footer-left,
-        .footer-right {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+      .store-btn:hover {
+        background: #f97316;
+        border-color: #f97316;
+        transform: translateY(-2px) scale(1.04);
+      }
 
-            @media (max-width: 580px) {
-                flex-direction: column;
-                gap: 0.25rem;
-                text-align: center;
-            }
-
-            .separator {
-                color: rgba(255, 255, 255, 0.3);
-
-                @media (max-width: 580px) {
-                    display: none;
-                }
-            }
-        }
-
-        .currency-rates {
-            display: flex;
-            gap: 1rem;
-
-            @media (max-width: 580px) {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-
-            @media (max-width: 480px) {
-                gap: 0.2rem;
-            }
-
-            .rate-item {
-                color: rgba(255, 255, 255, 0.8);
-                font-weight: 500;
-
-                @media (max-width: 480px) {
-                    font-size: 0.8rem;
-                }
-            }
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            @media (max-width: 480px) {
-                gap: 0.4rem;
-            }
-
-            .status-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: #666;
-
-                @media (max-width: 480px) {
-                    width: 7px;
-                    height: 7px;
-                }
-
-                &.online {
-                    background: #4caf50;
-                    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
-                }
-            }
-
-            .status-text {
-                font-size: 0.8rem;
-                color: rgba(255, 255, 255, 0.7);
-
-                @media (max-width: 480px) {
-                    font-size: 0.75rem;
-                }
-            }
-        }
-
-        /* // Animations */
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* // Additional mobile-specific improvements */
-        @media (max-width: 375px) {
-            .footer-content {
-                padding: 1.25rem 0.5rem 0;
-            }
-
-            .footer-newsletter {
-                padding: 1rem;
-            }
-
-            .social-links {
-                gap: 0.5rem;
-            }
-
-            .social-link {
-                width: 36px;
-                height: 36px;
-
-                i {
-                    font-size: 1rem;
-                }
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .main-content {
-                padding: 40px 20px;
-            }
-
-            .email-input-container {
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px;
-            }
-
-            .email-input {
-                text-align: center;
-            }
-
-            .cube {
-                width: 80px;
-                height: 80px;
-            }
-
-            .cube-face {
-                width: 80px;
-                height: 80px;
-            }
-
-            .front,
-            .back {
-                transform: rotateY(0deg) translateZ(40px);
-            }
-
-            .right {
-                transform: rotateY(90deg) translateZ(40px);
-            }
-
-            .left {
-                transform: rotateY(-90deg) translateZ(40px);
-            }
-
-            .top {
-                transform: rotateX(90deg) translateZ(40px);
-            }
-
-            .bottom {
-                transform: rotateX(-90deg) translateZ(40px);
-            }
-
-            .cube-container {
-                display: none;
-            }
-        }
-
-        .download-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            margin-bottom: 32px;
-        }
-
-        .store-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #222;
-            color: #fff;
-            border-radius: 16px;
-            padding: 12px 24px;
-            font-weight: 600;
-            font-size: 16px;
-            border: 1px solid #0ea5e9;
-            box-shadow: 0 2px 12px rgba(14, 165, 233, 0.12);
-            text-decoration: none;
-            transition: background 0.2s, border 0.2s, transform 0.2s;
-        }
-
-        .store-btn.appstore {
-            border-color: #f97316;
-        }
-
-        .store-btn:hover {
-            background: #f97316;
-            border-color: #f97316;
-            transform: translateY(-2px) scale(1.04);
-        }
-
-        .store-icon {
-            width: 28px;
-            height: 28px;
-            display: inline-block;
-        }
+      .store-icon {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+      }
     </style>
     <!-- In your footer HTML, make sure you include the icon library for the social icons. Add this in your <head>: -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-</head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="bg-grid"></div>
     <div class="bg-decoration">
-        <div class="hex-shape2"></div>
+      <div class="hex-shape2"></div>
     </div>
 
     <header class="header">
-        <div class="nav-left">
-            <div class="logo">
-                <img src="./assests/logo.png" alt="Doronpay Logo" />
-            </div>
+      <div class="nav-left">
+        <div class="logo">
+          <img src="./assests/logo.png" alt="Doronpay Logo" />
         </div>
-        <div class="nav-right">
-            <a href="https://web.doronpay.com/" style="text-decoration:none;">
-                <button class="nav-btn signup">Sign Up</button>
-            </a>
-            <a href="https://web.doronpay.com/" style="text-decoration:none;">
-                <button class="nav-btn login">Login</button>
-            </a>
-        </div>
+      </div>
+      <div class="nav-right">
+        <a href="https://web.doronpay.com/" style="text-decoration: none">
+          <button class="nav-btn signup">Sign Up</button>
+        </a>
+        <a href="https://web.doronpay.com/" style="text-decoration: none">
+          <button class="nav-btn login">Login</button>
+        </a>
+      </div>
     </header>
 
     <main class="main-content">
-        <div class="waitlist-badge">Join Waitlist</div>
+      <div class="waitlist-badge">Join Waitlist</div>
 
-        <h1 class="main-title">
-            A <a style="color: #f97316;">Crypto–Fiat</a> & <a style="color: #f97316;">Digital Payment</a> Platform Made
-            Simple.<br>
-        </h1>
+      <h1 class="main-title">
+        A <a style="color: #f97316">Crypto–Fiat</a> &
+        <a style="color: #f97316">Digital Payment</a> Platform Made Simple.<br />
+      </h1>
 
-        <p class="subtitle">
-            Join the waitlist, win rewards and be the first to experience DoronPay.<br>
-            Pay fast, pay smart<br>
-        </p>
+      <p class="subtitle">
+        Join the waitlist, win rewards and be the first to experience
+        DoronPay.<br />
+        Pay fast, pay smart<br />
+      </p>
 
-        <form class="email-form" onsubmit="handleSubmit(event)">
-            <div class="email-input-container">
-                <input type="text" class="email-input" placeholder="First Name" required>
-                <input type="text" class="email-input" placeholder="Last Name" required>
-                <div style="display: flex; width: 100%;">
-                    <input type="email" class="email-input" placeholder="Enter your email" required style="flex: 1;">
-                    <button type="submit" class="join-btn">Join Waitlist</button>
-                </div>
-            </div>
-        </form>
-
-        <div class="download-buttons">
-            <a href="#" class="store-btn playstore">
-                <i class="ri-google-play-fill"></i>
-                <div class="download-text">
-                    <span class="small">Get it on</span>
-                    <span class="large">Google Play</span>
-                </div>
-            </a>
-            <a href="#" class="store-btn appstore">
-                <i class="ri-apple-fill"></i>
-                <div class="download-text">
-                    <span class="small">Download on the</span>
-                    <span class="large">App Store</span>
-                </div>
-            </a>
+      <form class="email-form" onsubmit="handleSubmit(event)">
+        <div class="email-input-container">
+          <input
+            type="text"
+            class="email-input"
+            placeholder="First Name"
+            required
+          />
+          <input
+            type="text"
+            class="email-input"
+            placeholder="Last Name"
+            required
+          />
+          <div style="display: flex; width: 100%">
+            <input
+              type="email"
+              class="email-input"
+              placeholder="Enter your email"
+              required
+              style="flex: 1"
+            />
+            <!-- <input
+              type="text"
+              class="email-input"
+              placeholder="Referral Code"
+            /> -->
+            <button type="submit" class="join-btn">Join Waitlist</button>
+          </div>
         </div>
+      </form>
 
-        <div class="cube-container">
-            <div class="cube">
-                <div class="cube-face front"></div>
-                <div class="cube-face back"></div>
-                <div class="cube-face right"></div>
-                <div class="cube-face left"></div>
-                <div class="cube-face top"></div>
-                <div class="cube-face bottom"></div>
-            </div>
+      <div class="download-buttons">
+        <a href="#" class="store-btn playstore">
+          <i class="ri-google-play-fill"></i>
+          <div class="download-text">
+            <span class="small">Get it on</span>
+            <span class="large">Google Play</span>
+          </div>
+        </a>
+        <a href="#" class="store-btn appstore">
+          <i class="ri-apple-fill"></i>
+          <div class="download-text">
+            <span class="small">Download on the</span>
+            <span class="large">App Store</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="cube-container">
+        <div class="cube">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
         </div>
-
-
-
-
-
+      </div>
     </main>
 
     <!-- default-footer.component.html -->
     <div class="footer-container">
-        <div class="footer-content">
-            <!-- Main Footer Content -->
-            <div class="footer-main">
-                <div class="footer-section footer-brand">
-                    <div class="brand-logo">
-                        <img src="./assests/logo.png" alt="DoronPay" class="footer-logo">
-                        <h4>DoronPay</h4>
-                    </div>
-                    <p class="brand-description">
-                        Your trusted platform for cryptocurrency trading, money transfers,
-                        and digital financial services in Ghana and beyond.
-                    </p>
-                    <div class="security-badges">
-                        <div class="security-badge">
-                            <i class="ri-shield-check-fill"></i>
-                            <span>Bank-Level Security</span>
-                        </div>
-                        <div class="security-badge">
-                            <i class="ri-lock-fill"></i>
-                            <span>256-bit Encryption</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h5>Services</h5>
-                    <ul class="footer-links">
-                        <li><a href="/app/buy-bitcoin">Buy Bitcoin</a></li>
-                        <li><a href="/app/sell-bitcoin">Sell Bitcoin</a></li>
-                        <li><a href="/app/buy-usdt">Buy USDT</a></li>
-                        <li><a href="/app/usdt-transfer">USDT Transfer</a></li>
-                        <li><a href="/app/send-money">Send Money</a></li>
-                        <li><a href="/app/doron-swap">DoronSwap</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h5>Platform</h5>
-                    <ul class="footer-links">
-                        <li><a href="/app/bitcoin">Dashboard</a></li>
-                        <li><a href="/app/user-profile">My Account</a></li>
-                        <li><a href="/app/deposit-withdraw">Wallet</a></li>
-                        <li><a href="/app/customer-transactions">Transactions</a></li>
-                        <li><a href="/app/referrals-customers">Referrals</a></li>
-                        <li><a href="/app/analytics">Analytics</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h5>Support</h5>
-                    <ul class="footer-links">
-                        <li><a href="https://web.doronpay.com/">Help Center</a></li>
-                        <li><a href="https://web.doronpay.com/">Live Chat</a></li>
-                        <li><a href="https://web.doronpay.com/">Notifications</a></li>
-                        <li><a href="mailto:info@web.doronpay.com">Contact Us</a></li>
-                        <li><a href="tel:+1 778 800 9968">+1 778 800 9968</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h5>Company</h5>
-                    <ul class="footer-links">
-                        <li><a href="https://web.doronpay.com/">About Us</a></li>
-                        <li><a href="https://web.doronpay.com/">Careers</a></li>
-                        <li><a href="https://web.doronpay.com/">Blog</a></li>
-                        <li><a href="https://web.doronpay.com/">Press</a></li>
-                        <li><a href="https://web.doronpay.com/">Partners</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h5>Legal</h5>
-                    <ul class="footer-links">
-                        <li><a href="https://web.doronpay.com/">Privacy Policy</a></li>
-                        <li><a href="https://web.doronpay.com/">Terms of Service</a></li>
-                        <li><a href="https://web.doronpay.com/">AML Policy</a></li>
-                        <li><a href="https://web.doronpay.com/">Compliance</a></li>
-                        <li><a href="https://web.doronpay.com/">Fee Schedule</a></li>
-                    </ul>
-                </div>
+      <div class="footer-content">
+        <!-- Main Footer Content -->
+        <div class="footer-main">
+          <div class="footer-section footer-brand">
+            <div class="brand-logo">
+              <img
+                src="./assests/logo.png"
+                alt="DoronPay"
+                class="footer-logo"
+              />
+              <h4>DoronPay</h4>
             </div>
-
-            <!-- Newsletter Section -->
-            <div class="footer-newsletter">
-                <div class="newsletter-content">
-                    <div class="newsletter-text">
-                        <h4>Stay Updated</h4>
-                        <p>Get the latest crypto news, market updates, and exclusive offers</p>
-                    </div>
-                    <div class="newsletter-form">
-                        <div class="input-group">
-                            <input type="email" placeholder="Enter your email address" [(ngModel)]="newsletterEmail"
-                                class="newsletter-input">
-                            <button class="newsletter-btn" (click)="subscribeNewsletter()" [disabled]="isSubscribing">
-                                <span *ngIf="!isSubscribing">Subscribe</span>
-                                <i *ngIf="isSubscribing" class="ri-loader-4-line spinning"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <p class="brand-description">
+              Your trusted platform for cryptocurrency trading, money transfers,
+              and digital financial services in Ghana and beyond.
+            </p>
+            <div class="security-badges">
+              <div class="security-badge">
+                <i class="ri-shield-check-fill"></i>
+                <span>Bank-Level Security</span>
+              </div>
+              <div class="security-badge">
+                <i class="ri-lock-fill"></i>
+                <span>256-bit Encryption</span>
+              </div>
             </div>
+          </div>
 
-            <!-- Social Media & App Downloads -->
-            <div class="footer-social">
-                <div class="social-section">
-                    <h5>Follow Us</h5>
-                    <div class="social-links">
-                        <a href="https://x.com/doronpay?s=21" target="_blank" class="social-link twitter">
-                            <i class="ri-twitter-x-fill"></i>
-                        </a>
-                        <a href="https://facebook.com/doronpay" target="_blank" class="social-link facebook">
-                            <i class="ri-facebook-fill"></i>
-                        </a>
-                        <a href="https://instagram.com/doronpay" target="_blank" class="social-link instagram">
-                            <i class="ri-instagram-fill"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/company/doronpay/" target="_blank"
-                            class="social-link linkedin">
-                            <i class="ri-linkedin-fill"></i>
-                        </a>
-                        <a href="https://t.me/doronpay" target="_blank" class="social-link telegram">
-                            <i class="ri-telegram-fill"></i>
-                        </a>
-                        <a href="https://discord.gg/doronpay" target="_blank" class="social-link discord">
-                            <i class="ri-discord-fill"></i>
-                        </a>
-                    </div>
-                </div>
+          <div class="footer-section">
+            <h5>Services</h5>
+            <ul class="footer-links">
+              <li><a href="/app/buy-bitcoin">Buy Bitcoin</a></li>
+              <li><a href="/app/sell-bitcoin">Sell Bitcoin</a></li>
+              <li><a href="/app/buy-usdt">Buy USDT</a></li>
+              <li><a href="/app/usdt-transfer">USDT Transfer</a></li>
+              <li><a href="/app/send-money">Send Money</a></li>
+              <li><a href="/app/doron-swap">DoronSwap</a></li>
+            </ul>
+          </div>
 
-                <div class="app-downloads">
-                    <h5>Download Our App</h5>
-                    <div class="download-buttons">
-                        <a href="#" class="download-btn">
-                            <i class="ri-google-play-fill"></i>
-                            <div class="download-text">
-                                <span class="small">Get it on</span>
-                                <span class="large">Google Play</span>
-                            </div>
-                        </a>
-                        <a href="#" class="download-btn">
-                            <i class="ri-apple-fill"></i>
-                            <div class="download-text">
-                                <span class="small">Download on the</span>
-                                <span class="large">App Store</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+          <div class="footer-section">
+            <h5>Platform</h5>
+            <ul class="footer-links">
+              <li><a href="/app/bitcoin">Dashboard</a></li>
+              <li><a href="/app/user-profile">My Account</a></li>
+              <li><a href="/app/deposit-withdraw">Wallet</a></li>
+              <li><a href="/app/customer-transactions">Transactions</a></li>
+              <li><a href="/app/referrals-customers">Referrals</a></li>
+              <li><a href="/app/analytics">Analytics</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h5>Support</h5>
+            <ul class="footer-links">
+              <li><a href="https://web.doronpay.com/">Help Center</a></li>
+              <li><a href="https://web.doronpay.com/">Live Chat</a></li>
+              <li><a href="https://web.doronpay.com/">Notifications</a></li>
+              <li><a href="mailto:info@web.doronpay.com">Contact Us</a></li>
+              <li><a href="tel:+1 778 800 9968">+1 778 800 9968</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h5>Company</h5>
+            <ul class="footer-links">
+              <li><a href="https://web.doronpay.com/">About Us</a></li>
+              <li><a href="https://web.doronpay.com/">Careers</a></li>
+              <li><a href="https://web.doronpay.com/">Blog</a></li>
+              <li><a href="https://web.doronpay.com/">Press</a></li>
+              <li><a href="https://web.doronpay.com/">Partners</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h5>Legal</h5>
+            <ul class="footer-links">
+              <li><a href="https://web.doronpay.com/">Privacy Policy</a></li>
+              <li><a href="https://web.doronpay.com/">Terms of Service</a></li>
+              <li><a href="https://web.doronpay.com/">AML Policy</a></li>
+              <li><a href="https://web.doronpay.com/">Compliance</a></li>
+              <li><a href="https://web.doronpay.com/">Fee Schedule</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="footer-newsletter">
+          <div class="newsletter-content">
+            <div class="newsletter-text">
+              <h4>Stay Updated</h4>
+              <p>
+                Get the latest crypto news, market updates, and exclusive offers
+              </p>
             </div>
+            <div class="newsletter-form">
+              <div class="input-group">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  [(ngModel)]="newsletterEmail"
+                  class="newsletter-input"
+                />
+                <button
+                  class="newsletter-btn"
+                  (click)="subscribeNewsletter()"
+                  [disabled]="isSubscribing"
+                >
+                  <span *ngIf="!isSubscribing">Subscribe</span>
+                  <i
+                    *ngIf="isSubscribing"
+                    class="ri-loader-4-line spinning"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <!-- Footer Bottom -->
-            <!-- <div class="footer-bottom">
+        <!-- Social Media & App Downloads -->
+        <div class="footer-social">
+          <div class="social-section">
+            <h5>Follow Us</h5>
+            <div class="social-links">
+              <a
+                href="https://x.com/doronpay?s=21"
+                target="_blank"
+                class="social-link twitter"
+              >
+                <i class="ri-twitter-x-fill"></i>
+              </a>
+              <a
+                href="https://facebook.com/doronpay"
+                target="_blank"
+                class="social-link facebook"
+              >
+                <i class="ri-facebook-fill"></i>
+              </a>
+              <a
+                href="https://instagram.com/doronpay"
+                target="_blank"
+                class="social-link instagram"
+              >
+                <i class="ri-instagram-fill"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/company/doronpay/"
+                target="_blank"
+                class="social-link linkedin"
+              >
+                <i class="ri-linkedin-fill"></i>
+              </a>
+              <a
+                href="https://t.me/doronpay"
+                target="_blank"
+                class="social-link telegram"
+              >
+                <i class="ri-telegram-fill"></i>
+              </a>
+              <a
+                href="https://discord.gg/doronpay"
+                target="_blank"
+                class="social-link discord"
+              >
+                <i class="ri-discord-fill"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="app-downloads">
+            <h5>Download Our App</h5>
+            <div class="download-buttons">
+              <a href="#" class="download-btn">
+                <i class="ri-google-play-fill"></i>
+                <div class="download-text">
+                  <span class="small">Get it on</span>
+                  <span class="large">Google Play</span>
+                </div>
+              </a>
+              <a href="#" class="download-btn">
+                <i class="ri-apple-fill"></i>
+                <div class="download-text">
+                  <span class="small">Download on the</span>
+                  <span class="large">App Store</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <!-- <div class="footer-bottom">
       <div class="footer-bottom-content">
         <div class="footer-left">
           <span>&copy; {{ currentYear }} DoronPay Ltd. All rights reserved.</span>
@@ -1522,48 +1612,114 @@
         </div>
       </div>
     </div> -->
-        </div>
+      </div>
     </div>
 
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            const email = event.target.querySelector('input[type="email"]').value;
+      async function handleSubmit(event) {
+        event.preventDefault();
 
-            if (email) {
-                alert(`Thank you! We've added ${email} to the waitlist.`);
-                event.target.querySelector('input[type="email"]').value = '';
-            }
+        // Get form data
+        const formData = new FormData(event.target);
+        const firstName =
+          formData.get("firstName") ||
+          event.target.querySelector('input[placeholder="First Name"]').value;
+        const lastName =
+          formData.get("lastName") ||
+          event.target.querySelector('input[placeholder="Last Name"]').value;
+        const email =
+          formData.get("email") ||
+          event.target.querySelector('input[type="email"]').value;
+        const referralCode = formData.get("referralCode") || event.target.querySelector('input[placeholder="Referral Code"]')?.value || "";
+
+        // Basic validation
+        if (!firstName.trim() || !lastName.trim() || !email.trim()) {
+          alert("Please fill in all required fields");
+          return;
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const cube = document.querySelector('.cube');
-            let isHovered = false;
+        // Disable submit button and show loading state
+        const submitBtn = event.target.querySelector(".join-btn");
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Joining...";
 
-            cube.addEventListener('mouseenter', function () {
-                isHovered = true;
-                this.style.animationPlayState = 'paused';
-            });
+        try {
+          const response = await fetch(
+            "https://webapi.doronpay.com/customers/waitlist/join",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                email: email.trim(),
+                // referralCode: referralCode.trim()
+                // referralCode can be added here if you have it
+              }),
+            }
+          );
 
-            cube.addEventListener('mouseleave', function () {
-                isHovered = false;
-                this.style.animationPlayState = 'running';
-            });
+          const result = await response.json();
 
-            document.addEventListener('mousemove', function (e) {
-                const shapes = document.querySelectorAll('.floating-shape');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
+          if (response.ok) {
+            // Success
+            alert(
+              `Thank you ${firstName}! You've been added to the waitlist. Check your email for confirmation.`
+            );
 
-                shapes.forEach((shape, index) => {
-                    const intensity = (index + 1) * 10;
-                    const moveX = (mouseX - 0.5) * intensity;
-                    const moveY = (mouseY - 0.5) * intensity;
-                    shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                });
-            });
+            // Clear form
+            event.target.querySelector(
+              'input[placeholder="First Name"]'
+            ).value = "";
+            event.target.querySelector('input[placeholder="Last Name"]').value =
+              "";
+            event.target.querySelector('input[type="email"]').value = "";
+          } else {
+            // Handle API errors
+            const errorMessage =
+              result.message || "Failed to join waitlist. Please try again.";
+            alert(errorMessage);
+          }
+        } catch (error) {
+          console.error("Error joining waitlist:", error);
+          alert("Network error. Please check your connection and try again.");
+        } finally {
+          // Re-enable submit button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const cube = document.querySelector(".cube");
+        let isHovered = false;
+
+        cube.addEventListener("mouseenter", function () {
+          isHovered = true;
+          this.style.animationPlayState = "paused";
         });
-    </script>
-</body>
 
+        cube.addEventListener("mouseleave", function () {
+          isHovered = false;
+          this.style.animationPlayState = "running";
+        });
+
+        document.addEventListener("mousemove", function (e) {
+          const shapes = document.querySelectorAll(".floating-shape");
+          const mouseX = e.clientX / window.innerWidth;
+          const mouseY = e.clientY / window.innerHeight;
+
+          shapes.forEach((shape, index) => {
+            const intensity = (index + 1) * 10;
+            const moveX = (mouseX - 0.5) * intensity;
+            const moveY = (mouseY - 0.5) * intensity;
+            shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
